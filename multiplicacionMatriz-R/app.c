@@ -18,3 +18,23 @@ int B[N][N] = {
 
 // Matriz para almacenar el resultado
 int C[N][N];
+
+
+// Funcion para calcular una fila 
+void* multiplicacion(void* arg) {
+    // Extraemos el argumento
+    int fila = *(int*)arg;
+    free(arg); // Liberamos la memoria 
+
+    // Recorremos todas las columnas de la fila
+    for (int col = 0; col < N; col++) {
+        C[fila][col] = 0; // Inicializamos la matriz del resultado
+
+        // Realizamos la multiplicacion de la fila de A con las columnas de B
+        for (int k = 0; k < N; k++) {
+            C[fila][col] += A[fila][k] * B[k][col];
+        }
+    }
+
+    return NULL; // Finalizamos
+}
