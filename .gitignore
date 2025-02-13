@@ -1,2 +1,3 @@
 # Ignorar la carpeta build (ejecutables y archivos compilados)
 /Ejercicios/build/
+/Ejercicios/.vscode/
