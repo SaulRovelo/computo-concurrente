@@ -24,7 +24,7 @@ int C[N][N];
 void* multiplicacion(void* arg) {
     // Extraemos el argumento
     int fila = *(int*)arg;
-    free(arg); // Liberamos la memoria 
+    //free(arg); // Liberamos la memoria 
 
     // Recorremos todas las columnas de la fila
     for (int col = 0; col < N; col++) {
@@ -37,4 +37,32 @@ void* multiplicacion(void* arg) {
     }
 
     return NULL; // Finalizamos
+}
+
+int main (){
+
+    pthread_t hilo0, hilo1, hilo2; // Declaramos los hilos
+
+    int fila0 = 0; // fila 1 
+
+    // Creamos el hilo para la fila 1 con sus argumentos correspondientes
+    pthread_create(&hilo0, NULL, multiplicacion, &fila0); 
+
+    
+
+    // Esperamos a que el hilo termine
+    pthread_join(hilo0, NULL);
+
+   
+
+    // For que recorre la matriz resultado para imprimir
+    printf("Resultado C:\n");
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            printf("%d ", C[i][j]);
+        }
+        printf("\n");
+    }
+
+    return 0;
 }
