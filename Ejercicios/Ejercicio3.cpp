@@ -33,3 +33,7 @@ int main() {
     std::cout << "PC --> " << pc_main << " \n";  // Imprimimos el numero de instrucciones de main
     return 0;  
 }
+
+// El programa ejecuta de manera secuencial la suma de una lista de numeros. 
+// La funcion suma procesa los numeros uno por uno y actualiza un contador de instrucciones (pc_suma). 
+//En elmain también lleva un contador (pc_main) para seguir el orden de ejecución.

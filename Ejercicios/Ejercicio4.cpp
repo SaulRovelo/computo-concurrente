@@ -54,3 +54,8 @@ int main() {
     std::cout << "PC --> " << pc_main << " \n";  // Imprimimos el numero de instrucciones de main
     return 0; 
 }
+
+// El programa ejecuta en paralelo tres hilos que suman una lista de 
+//numeros. Cada hilo tiene su propio contador de instrucciones pc_suma 
+//y procesa los numeros de manera independiente
+//simulando la ejecución concurrente de tareas.
