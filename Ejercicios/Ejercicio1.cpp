@@ -45,3 +45,5 @@ int main() {
 
     return 0; //Finalizacion
 }
+// El programa simula la ejecución de instrucciones, utilizando un contador de programa (PC) 
+// y un vector de instrucciones. Cada instrucción se "ejecuta" con un retraso simulado.
