@@ -1,10 +1,10 @@
-#include <iostream>
-#include <vector>
-#include <thread>
+#include <iostream> // Entrada/salida estandar
+#include <vector>   // Vectores dinámicos
+#include <thread> // Hilos
 
 
-#define INICIO 1
-#define META 30
+#define INICIO 1 //Variable global para inicializar la posicion
+#define META 30 //Variable global para la meta
 
 void brinca(void * arg){
     int * id = (int *) arg; //casteamos
@@ -38,9 +38,4 @@ int main(int argc, char* argv[]){
     for (int i = 0; i < ranas; i++)
         ranitas[i].join();
     
-    
-    
-    
-
-
 }
