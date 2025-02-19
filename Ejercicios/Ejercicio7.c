@@ -18,6 +18,7 @@ void * brinca(void * arg){
         sleep(1);
     }
 
+    free(id); //Liberamos memoria
     printf("He llegado a la meta y soy la ranita %d\n",*id); //Imprimimos que la ranita a llegado a la meta
     
     return NULL;
@@ -53,3 +54,5 @@ int main(int argc, char * argv []){ //Vamos a trabajar con parametros del main
     
     return 0;
 }
+// Simula una carrera de ranas donde cada una avanza de manera aleatoria en hilos separados 
+//hasta llegar a la meta, sin determinar un ganador.
