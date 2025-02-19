@@ -1,52 +1,50 @@
 //Ejercicio 4
-#include <stdio.h>
-#include <pthread.h>
-#include <unistd.h>
+#include <stdio.h> // Entrada/salida estandar
+#include <pthread.h> //Hilos
+#include <unistd.h> //para el sleep (bajo nivel en el sistema)
 #include <stdlib.h> //para memoria dinamica, en este caso para atoi
-#include <time.h>
+#include <time.h> //Para generar numeros aleatorios
 
-#define inicio 1
-#define meta 30
+#define inicio 1 //Variable global para inicializar la posicion
+#define meta 30 //Variable global para la meta
 
 void * brinca(void * arg){
 
-    int * id = (int *) arg;
+    int * id = (int *) arg; //casteamos pasamos de char a int
     int posicion = inicio;
-    while (posicion<meta)
+    while (posicion<meta) //Cuando la ranita llegue a la meta que es 30 se sale del bucle
     {
         posicion+= rand()%10+1; //genera numeros entre 1 y 10
         sleep(1);
     }
 
-    printf("He llegado a la meta y soy la ranita %d\n",*id);
-
-    
+    printf("He llegado a la meta y soy la ranita %d\n",*id); //Imprimimos que la ranita a llegado a la meta
     
     return NULL;
 }
 
-// [nombre_programa, argv[1], argv[2]]
+
 
 int main(int argc, char * argv []){ //Vamos a trabajar con parametros del main
 
     srand(time(NULL)); //para numero aleatorios
 
-    int ranas =atoi(argv[1]);
+    int ranas =atoi(argv[1]); //Convertimos el argumento a entero
     printf("Voy a mandar a competir a %d ranas \n",ranas);
     pthread_t ranitas[ranas]; //creamos un arreglo de hilos 
 
     
-    //Creamos los hilos 
+    //Creamos y ejecutamos los hilos
     for (int i = 0; i < ranas; i++)
     {
-        int *id = malloc(sizeof(int));
+        int *id = malloc(sizeof(int)); //Reservamos memoria dinamica
 
-        *id =i+1;
-        pthread_create(&ranitas[i],NULL,brinca,(void *) id);
+        *id =i+1; //cada ranita tendra su identificador unico
+        pthread_create(&ranitas[i],NULL,brinca,(void *) id); //Creamos y ejecutamos los hilos(ranitas)
     }
     
-    //mandamos a esperar al main hasta que terminen los hilos 
-
+    //Esperamos a que todos los hilos terminen antes de finalizar el programa
+    //(que las ranitas lleguen a la meta)
     for(int i=0; i<ranas; ++i){
         pthread_join(ranitas[i],NULL);
 
