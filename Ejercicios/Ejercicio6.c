@@ -1,7 +1,7 @@
 //Ejercicio 3
 #include <stdio.h>
 #include <pthread.h>
-#include <time.h>
+//#include <time.h>
 #include <unistd.h> //Podemos dormir los hilos, para los procesos del sistema operativo
 
 typedef struct{
@@ -13,6 +13,7 @@ typedef struct{
 }parametros_hilo;
 
 
+
 void * muestraContador(void *arg){
     //vamos a desemcapsular los valores de la struct, sino no podemos acceder a ella
     parametros_hilo *philo = (parametros_hilo *) arg; //Casteamos
@@ -21,13 +22,14 @@ void * muestraContador(void *arg){
     int incremento = philo->incremento;
     int fin = philo->fin;
     int id = philo->id;
-    int contador= inicio;
+    int contador = inicio;
 
     while (inicio<=fin)
     {
         printf(" \n Yo soy el hilo %d y el contador es: %d", id, contador);
 
         contador+=incremento;
+        sleep(1);
     }
     
 
@@ -46,7 +48,16 @@ int main()
 
     // Creacion del hilo secundario que ejecutara la función muestraContador
     pthread_create(&hilo1, NULL, muestraContador, (void *)&philo1);
-    pthread_create(&hilo2,NULL,muestraContador,(void *) &hilo2); //pasamos por referencia pero en la funcion 
+    pthread_create(&hilo2,NULL,muestraContador,(void *) &philo2); //pasamos por referencia pero en la funcion 
     //acceder a esos datos tenemos que castear
+
+    pthread_join(hilo1,NULL);
+    pthread_join(hilo2,NULL);
+
+
+    printf("\nTerminamos");
+    return 0;
+
+
 
 }
