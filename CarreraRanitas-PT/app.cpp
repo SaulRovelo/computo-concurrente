@@ -10,9 +10,9 @@ void brinca();
 
 int main(int argc, char* argv[]){
 
-    srand(time(nullptr)); // Inicializamos semilla
+    srand(time(nullptr)); // Inicializamos semilla para numeros aleatorios
 
-    int ranas = std:: atoi(argv[1]); //Convertimo el argumento a entero
+    int ranas = std:: atoi(argv[1]); //Convertimos el argumento a entero
     std::cout << "Voy a mandar a competir a " << ranas << " ranas" << std::endl;
 
     std::vector<std::thread> ranitas(ranas); //Creamos el arreglo de hilos(ranitas)
