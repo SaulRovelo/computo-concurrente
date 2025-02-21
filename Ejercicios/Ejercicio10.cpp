@@ -1,0 +1,62 @@
+//Ejercicio 5 modificado
+#include <iostream>
+#include <vector>
+#include <thread>
+#include <chrono>
+#include <vector>
+
+std::vector <int> arreglo; // Vector global que almacenará los valores a procesar
+
+
+//Funcion que eleva al cuadrado, la cual le pasamos el inicio y el fin del for, junto con el id del hilo
+void calculaCuadrados(int inicio, int fin,int id){
+    for (int i = inicio; i < fin; i++)
+    {
+        arreglo[i]=arreglo[i]*arreglo[i]; //Calculamos el cuadrado del elemento actual
+        std::this_thread::sleep_for(std::chrono::seconds(1));  // Simula el tiempo de ejecución de la instrucción
+        std::cout<<"\nYo soy el hilo"<<id<<" y el valor que modifique es:"<<arreglo[i]<<"\n"; //Imprimimos en que hilo estamos y el valor que modificamos
+    }
+    
+}
+
+int main(int argc, char* argv[]){
+
+   // Convertimos el argumento recibido desde el main a un número entero 
+   //que representa el tamaño del arreglo
+    int TAMANIO=std:: atoi(argv[1]);
+    
+    //Definimos el tamaño del arreglo
+    arreglo.resize(TAMANIO);
+
+    // Inicializamos el vector con valores del 0 al TAMANIO-1
+    for (int i = 0; i < TAMANIO; i++)
+    {
+        arreglo[i]=i;
+    }
+
+    std::cout<<"\nEl arreglo original es:";  //Imprimimos el arreglo original
+
+    //Mostramos el arreglo original
+    for (int i = 0; i < TAMANIO; i++)
+    {
+        std::cout<<arreglo[i]<<" ";
+    }
+
+    int mitad=TAMANIO/2; //Calculamos la mitad del arreglo para dividir la carga entre los hilos
+
+    //Creamos los hilos
+    std::thread hilo1(calculaCuadrados, 0, mitad, 1); // Procesa la primera mitad del arreglo (En el bucle empezara de 0 y terminara en la mitad)
+    std::thread hilo2(calculaCuadrados, mitad, TAMANIO, 2); // Procesa la segunda mitad del arregle (En el buclue inicia desde la mitad y llega hasta el final del arreglo 'Tamanio')
+    
+    //Esperamos a que todos los hilos terminen antes de finalizar el programa
+    hilo1.join();
+    hilo2.join();
+
+    //Imprimimos el arreglo que contiene los numeros iniciales al cuadrado
+    std::cout<<"\nEl arreglo modificado es:";
+    for (int i = 0; i < TAMANIO; i++)
+    {
+        std::cout<<arreglo[i]<<" ";
+    }
+    
+}
