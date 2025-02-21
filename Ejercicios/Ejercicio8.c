@@ -1,4 +1,4 @@
-//Ejercicio 5
+//Ejercicio 4
 #include <stdio.h> // Entrada/salida estandar
 #include <pthread.h> //Hilos
 #include <unistd.h> //para el sleep (bajo nivel en el sistema)
@@ -36,6 +36,7 @@ void * brinca(void * arg){
     
     return NULL;
 }
+
 
 
 
