@@ -60,3 +60,6 @@ int main(int argc, char* argv[]){
     }
     
 }
+
+//Este programa simula el procesamiento de un vector dinamico (arreglo) de tamaño 10, dividiéndolo en dos partes 
+//y asignando a dos hilos la tarea de elevar al cuadrado los elementos de cada segmento de manera paralela.
