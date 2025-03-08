@@ -35,7 +35,9 @@ int main(int argc, char * argv[]){
 	int num_peatones=atoi(argv[1]);
 	//declaramos nuestros hilos
 	pthread_t hilo_policia, hilos_peaton[num_peatones];
+	
 	pthread_create(&hilo_policia,NULL,semaforo,NULL);
+
 	for(int i=0;i<num_peatones;++i){
 		int * id = malloc(sizeof(int));//cada ranita tiene su identificador "unico"
 		* id = i+1;
