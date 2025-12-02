@@ -2,22 +2,21 @@
 
 ## 🚀 Introducción
 
-Este repositorio está enfocado en la explicación detallada de los conceptos esenciales del cómputo concurrente junto con ejemplos prácticos codificados en los lenguajes C y C++.
+En esta sección se presentan ejercicios prácticos relacionados con los principales mecanismos de concurrencia. Los ejemplos muestran el uso de hilos, mutex, variables de condición, semáforos y barreras, implementados tanto en C como en C++.
+
+---
 
 ## 🧵 Hilos (Threads)
 
 Los hilos (threads) son unidades de ejecución que permiten realizar tareas en paralelo dentro de un programa. Los hilos comparten memoria y recursos del proceso principal, lo que hace necesario implementar mecanismos de sincronización para evitar conflictos o condiciones de carrera.
 
+---
+
 ### 📌 Funciones utilizadas en C (Librería: `<pthread.h>`)
 
-- **`pthread_t`**: tipo de dato que representa un identificador de un hilo.
-- **`pthread_create()`**: crea un nuevo hilo.
-- **`pthread_join()`**: espera a que un hilo específico termine su ejecución.
-
-### 📌 Funciones utilizadas en C++ (Librería: `<thread>`)
-
-- **`std::thread`**: crea y maneja hilos.
-- **`join()`**: espera a que el hilo específico termine su ejecución.
+- `pthread_t`: tipo de dato que representa un identificador de un hilo.  
+- `pthread_create()`: crea un nuevo hilo.  
+- `pthread_join()`: espera a que un hilo específico termine su ejecución.
 
 ---
 
@@ -29,17 +28,22 @@ pthread_create(&hilo, atributos, funcion, argumento );
 pthread_join(hilo, NULL);
 ```
 
-🔹 Explicación de `pthread_create(&hilo, attr, función, argumento);`
+### 🔹 Explicación
 
-- **`&hilo`**: Referencia al hilo que será inicializado.
-- **`atributo`**: Atributos predeterminados del hilo, puede ser `NULL`.
-- **`incremento`**: Función que ejecutará el hilo.
-- **`argumento`**: Argumento que recibirá la función, puede ser `NULL`.
+- `&hilo`: referencia al hilo que será inicializado.  
+- `atributos`: parámetros opcionales del hilo, puede ser `NULL`.  
+- `funcion`: función que ejecutará el hilo.  
+- `argumento`: argumento suministrado a la función del hilo.  
+- `pthread_join(hilo, NULL)`: espera la finalización del hilo.
 
-🔹 Explicación de `pthread_join(hilo, NULL);`
+---
 
-- **`hilo`**: Identificador del hilo cuya ejecución queremos esperar.
-- **`NULL`**: Indica que no necesitamos recuperar ningún valor de retorno del hilo al finalizar.
+### 📌 Funciones utilizadas en C++ (Librería: `<thread>`)
+
+- `std::thread`: crea y controla hilos.  
+- `join()`: espera a que el hilo termine su ejecución.
+
+---
 
 ## 📜 Declaración en C++:
 
@@ -47,34 +51,26 @@ pthread_join(hilo, NULL);
 std::thread hilo(funcion, argumento);
 hilo.join();
 ```
-🔹 Explicación de `std::thread hilo(funcion, argumento);`
 
-- **hilo**: Objeto del tipo `std::thread` que maneja el hilo.
-- **funcion**: Función que ejecutará el hilo.
-- **argumento**: Argumento que recibe la función al ser ejecutada.
+### 🔹 Explicación
 
-🔹 Explicación de `hilo.join();`
+- `std::thread hilo(...)`: crea un hilo que ejecuta la función indicada.  
+- `join()`: sincroniza la ejecución y espera la finalización del hilo.
 
-- **join()**: Método que espera a que el hilo finalice su ejecución antes de continuar con el resto del programa.
+---
 
 ## 🔒 Mutex (Mutual Exclusion)
 
-Los **mutex** (exclusión mutua) son mecanismos utilizados en la programación concurrente para prevenir condiciones de carrera al acceder a recursos compartidos como variables, estructuras de datos o archivos.
+Los **mutex** son mecanismos que garantizan la exclusión mutua, permitiendo que solo un hilo acceda a un recurso compartido en un momento dado.
+
+---
 
 ### 📌 Funciones utilizadas en C (Librería: `<pthread.h>`)
 
-- **`pthread_mutex_t`**: tipo de dato que representa un mutex.
-- **`pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;`** inicializa un mutex.
-- **`pthread_mutex_lock()`**: bloquea el mutex para evitar acceso simultáneo al recurso compartido.
-- **`pthread_mutex_unlock()`**: desbloquea el mutex, permitiendo que otros hilos accedan al recurso compartido.
-- **`pthread_mutex_destroy()`**: destruye un mutex cuando ya no es necesario.
-
-### 📌 Funciones utilizadas en C++ (Librería: `<mutex>`)
-
-- **`std::mutex`**: clase de C++ que representa un mutex.
-- **`std::mutex mtx`**: inicializa un mutex.
-- **`lock()`**: bloquea el mutex para evitar acceso simultáneo al recurso compartido.
-- **`unlock()`**: libera el mutex, permitiendo que otros hilos accedan al recurso compartido.
+- `pthread_mutex_t`: define un mutex.  
+- `pthread_mutex_lock()`: bloquea el mutex.  
+- `pthread_mutex_unlock()`: desbloquea el mutex.  
+- `pthread_mutex_destroy()`: destruye un mutex.
 
 ---
 
@@ -82,17 +78,24 @@ Los **mutex** (exclusión mutua) son mecanismos utilizados en la programación c
 
 ```c
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+
 pthread_mutex_lock(&mutex);
 // Recurso compartido
 pthread_mutex_unlock(&mutex);
 ```
-### 🔹 Explicación de `pthread_mutex_lock(&mutex);`
 
-- **`pthread_mutex_lock()`**: Bloquea el mutex antes de acceder a un recurso compartido, asegurando que solo un hilo pueda modificarlo en un momento dado.
+### 🔹 Explicación
 
-### 🔹 Explicación de `pthread_mutex_unlock(&mutex);`
+- `pthread_mutex_lock()`: asegura el acceso exclusivo al recurso.  
+- `pthread_mutex_unlock()`: libera el acceso al recurso.
 
-- **`pthread_mutex_unlock()`**: Libera el mutex para permitir que otros hilos accedan al recurso compartido.
+---
+
+### 📌 Funciones utilizadas en C++ (Librería: `<mutex>`)
+
+- `std::mutex`: tipo de mutex.  
+- `lock()`: bloquea el mutex.  
+- `unlock()`: libera el mutex.
 
 ---
 
@@ -100,16 +103,225 @@ pthread_mutex_unlock(&mutex);
 
 ```cpp
 std::mutex mtx;
+
 mtx.lock();
 // Recurso compartido
 mtx.unlock();
 ```
-### 🔹 Explicación de `mtx.lock();`
 
-- **`lock()`**: Bloquea el mutex antes de acceder a un recurso compartido para evitar modificaciones concurrentes no controladas.
+### 🔹 Explicación
 
-### 🔹 Explicación de `mtx.unlock();`
+- `lock()`: permite acceso exclusivo al recurso.  
+- `unlock()`: lo libera para otros hilos.
 
-- **`unlock()`**: Libera el mutex para que otros hilos puedan acceder al recurso compartido.
+---
 
+## ⏱️ Variables de condición (Condition Variables)
+
+Las variables de condición permiten que un hilo espere hasta que una condición lógica se vuelva verdadera.  
+Siempre se usan junto con un mutex.
+
+---
+
+### 📌 Funciones utilizadas en C (Librería: `<pthread.h>`)
+
+- `pthread_cond_t`: variable de condición.  
+- `pthread_cond_wait()`: bloquea el hilo.  
+- `pthread_cond_signal()`: despierta un hilo.  
+- `pthread_cond_broadcast()`: despierta a todos los hilos en espera.  
+- `pthread_cond_destroy()`: destruye la variable.
+
+---
+
+## 📜 Declaración en C:
+
+```c
+pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
+
+pthread_mutex_lock(&mutex);
+
+while (condicion == 0) {
+    pthread_cond_wait(&cond, &mutex);
+}
+
+// Sección protegida
+
+pthread_mutex_unlock(&mutex);
+```
+
+### 🔹 Explicación
+
+- `pthread_cond_wait()`: libera el mutex temporalmente y bloquea.  
+- `pthread_cond_signal()`: despierta un hilo bloqueado.  
+- `pthread_cond_broadcast()`: despierta a todos los hilos.
+
+---
+
+### 📌 Funciones utilizadas en C++ (Librería: `<condition_variable>`)
+
+- `std::condition_variable`  
+- `wait()`  
+- `notify_one()`  
+- `notify_all()`  
+
+---
+
+## 📜 Declaración en C++:
+
+```cpp
+std::mutex mtx;
+std::condition_variable cv;
+bool listo = false;
+
+std::unique_lock<std::mutex> lock(mtx);
+
+cv.wait(lock, [&]{ return listo; });
+
+// Sección protegida
+```
+
+### 🔹 Explicación
+
+- `wait()`: bloquea el hilo mientras la condición esté en falso.  
+- `notify_one()` y `notify_all()`: despiertan hilos bloqueados.
+
+---
+
+## 🚦 Semáforos
+
+Los semáforos controlan el acceso concurrente mediante un contador entero.  
+Pueden ser binarios (0 o 1) o de conteo.
+
+---
+
+### 📌 Funciones utilizadas en C (Librería: `<semaphore.h>`)
+
+- `sem_t`: semáforo.  
+- `sem_init()`: inicializa.  
+- `sem_wait()`: decrementa y bloquea si es necesario.  
+- `sem_post()`: incrementa.  
+- `sem_destroy()`: elimina el semáforo.
+
+---
+
+## 📜 Declaración en C:
+
+```c
+sem_t semaforo;
+
+sem_init(&semaforo, 0, 1);
+
+sem_wait(&semaforo);
+// Sección crítica
+sem_post(&semaforo);
+
+sem_destroy(&semaforo);
+```
+
+### 🔹 Explicación
+
+- `sem_wait()`: bloquea si el valor es 0.  
+- `sem_post()`: desbloquea hilos incrementando el contador.
+
+---
+
+### 📌 Funciones utilizadas en C++ (C++20)
+
+- `std::counting_semaphore`  
+- `acquire()`  
+- `release()`  
+
+---
+
+## 📜 Declaración en C++:
+
+```cpp
+#include <semaphore>
+
+std::counting_semaphore<1> semaforo(1);
+
+semaforo.acquire();
+// Sección crítica
+semaforo.release();
+```
+
+### 🔹 Explicación
+
+- `acquire()`: bloquea mientras no haya permisos.  
+- `release()`: libera un permiso.
+
+---
+
+## 🧱 Barreras de sincronización
+
+Las barreras permiten que varios hilos esperen entre sí hasta que todos alcancen un punto específico.
+
+---
+
+### 📌 Funciones utilizadas en C (Librería: `<pthread.h>`)
+
+- `pthread_barrier_t`  
+- `pthread_barrier_init()`  
+- `pthread_barrier_wait()`  
+- `pthread_barrier_destroy()`  
+
+---
+
+## 📜 Declaración en C:
+
+```c
+pthread_barrier_t barrera;
+
+pthread_barrier_init(&barrera, NULL, 5);
+
+pthread_barrier_wait(&barrera);
+// Código que continúa tras la barrera
+
+pthread_barrier_destroy(&barrera);
+```
+
+### 🔹 Explicación
+
+- `pthread_barrier_wait()`: bloquea al hilo hasta que todos lleguen.  
+
+---
+
+### 📌 Funciones utilizadas en C++20 (Librería: `<barrier>`)
+
+- `std::barrier`  
+- `arrive_and_wait()`  
+
+---
+
+## 📜 Declaración en C++20:
+
+```cpp
+#include <barrier>
+#include <thread>
+#include <iostream>
+
+std::barrier barrera(5);
+
+void tarea() {
+    std::cout << "Hilo listo\n";
+    barrera.arrive_and_wait();
+    std::cout << "Hilo continuando\n";
+}
+
+int main() {
+    std::thread hilos[5];
+    for (int i = 0; i < 5; i++)
+        hilos[i] = std::thread(tarea);
+
+    for (auto &h : hilos)
+        h.join();
+}
+```
+
+### 🔹 Explicación
+
+- `arrive_and_wait()`: sincroniza a todos los hilos antes de continuar.
+
+---
 
